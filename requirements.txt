@@ -3,3 +3,4 @@ pydantic_settings
 pydantic
 fastapi
 peewee
+psycopg2

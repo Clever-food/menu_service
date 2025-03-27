@@ -1,12 +1,14 @@
 
 import asyncio
+from typing import List
 from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi.responses import JSONResponse
 from src.service.admin_service import AdminService
 from src.service.data_service import DataService
 from src.service.connection_service import ConnectionService
 from src.app.http_exceptions import EntityDoesNotExistError, EntityNoMinimumLength
 from depends import get_code, get_data_storage, get_menu_service, get_websocket_manager
-from dto import ChequeDTO
+from dto import ChequeDTO, MenuDTO
 from src.service.menu_processing_service import MenuProcessingService
 
 menu_router = APIRouter(
@@ -85,3 +87,28 @@ def check_code(
     admin_service: AdminService = Depends(get_code)
 ):
     return admin_service.check_code(code)
+
+@menu_router.delete("/delete_menu_item")
+def delete_menu_item(
+    menu_id: int,
+    menu_processing_service: MenuProcessingService = Depends(get_menu_service)
+):
+    try:
+        return menu_processing_service.delete_menu_item(menu_id)
+    except menu_processing_service.EntityDoesNotExist as e:
+        raise EntityDoesNotExistError(e.model)
+    
+@menu_router.get("/get_all_menu")
+def get_all_menu(
+    menu_processing_service: MenuProcessingService = Depends(get_menu_service)
+):
+    try:
+        items = menu_processing_service.get_all_menu_items()
+        if not items:
+            return JSONResponse(
+                status_code=200,
+                content={"detail": "Menu is empty", "items": []}
+            )
+        return items
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Возникла ошибка: {e}")

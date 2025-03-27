@@ -17,6 +17,11 @@ class MenuDTO(pydantic.BaseModel):
     price: int
     volume: int
     
+class MenuDTOwithID(pydantic.BaseModel):
+    menu_id: int
+    name: str
+    price: int
+    volume: int
 class ProductDTO(pydantic.BaseModel):
     real_id: int
     menu_item_id: int

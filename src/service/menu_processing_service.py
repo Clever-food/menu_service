@@ -1,5 +1,5 @@
 from typing import List
-from dto import ChequeDTO, ProductDTOandMenuDTO
+from dto import ChequeDTO, MenuDTOwithID, ProductDTOandMenuDTO
 from dto import ProductDTO
 from src.repository.menu_repo import MenuRepo
 
@@ -57,5 +57,14 @@ class MenuProcessingService:
             return '0' 
         return more_menu
                 
+    def delete_menu_item(self, menu_id: int):
+        try:
+            return self.menu_repo.delete_menu_item(menu_id)
+        except self.menu_repo.EntityDoesNotExist as e:
+            raise self.EntityDoesNotExist(e.model)
+        
+    def get_all_menu_items(self) -> List[MenuDTOwithID]:
+        return self.menu_repo.get_all_menu_items()
+
 
         

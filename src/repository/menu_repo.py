@@ -1,4 +1,5 @@
-from dto import MenuDTO
+from typing import List
+from dto import MenuDTO, MenuDTOwithID
 from src.models.menu_model import MenuModel
 import peewee
 class MenuRepo:
@@ -53,3 +54,20 @@ class MenuRepo:
             price=price,
             volume=volume,
         ).execute()
+    
+    def delete_menu_item(self, menu_id: int):
+        deleted_count = self.menu_model.delete().where(self.menu_model.menu_id == menu_id).execute()
+        if deleted_count == 0:
+            raise self.EntityDoesNotExist(self.menu_model)
+        return deleted_count
+    
+    def get_all_menu_items(self) -> List[MenuDTOwithID]:
+        query = self.menu_model.select()
+        return [
+            MenuDTOwithID(
+                menu_id=item.menu_id,
+                name=item.name,
+                price=item.price,
+                volume=item.volume
+            ) for item in query
+        ]
