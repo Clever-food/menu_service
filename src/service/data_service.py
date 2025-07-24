@@ -11,3 +11,6 @@ class DataService:
 
     def get_data(self) -> ProductDTOandMenuDTO:
         return self._repository.get()
+    
+    def clear_data(self) -> None:
+        self._repository.clear()

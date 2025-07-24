@@ -112,3 +112,15 @@ def get_all_menu(
         return items
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Возникла ошибка: {e}")
+
+@menu_router.delete("/clear_saved_data")
+async def clear_saved_data(
+    data_storage: DataService = Depends(get_data_storage),
+    connection_service: ConnectionService = Depends(get_websocket_manager)
+):
+    try:
+        data_storage.save_data(None)
+        await connection_service.broadcast({"error": "Data cleared"})
+        return {"detail": "Saved data cleared"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Возникла ошибка: {e}")

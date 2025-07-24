@@ -10,3 +10,6 @@ class DataRepo:
 
     def get(self) -> ProductDTOandMenuDTO:
         return self._data
+    
+    def clear(self):
+        self.save(None)
