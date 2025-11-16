@@ -2,23 +2,23 @@ from typing import List
 import pydantic
     
 class MenuDTO(pydantic.BaseModel):
-    name: str
-    price: int
-    volume: int
+    id: int
+    dish_class: int
+    dish_name: str
+    is_portionable: bool | None = None
+    weight_volume: int | None = None
+    price: int | None = None
     
-class MenuDTOwithID(pydantic.BaseModel):
-    menu_id: int
-    name: str
-    price: int
-    volume: int
-class ProductDTO(pydantic.BaseModel):
-    real_id: int
-    menu_item_id: int
-    amount: int
+class DetectedDish(pydantic.BaseModel):
+    id: int
+    dish_class: int
+    amount: float
 
 class ChequeDTO(pydantic.BaseModel):
-    task_id: int
-    product_list: List[ProductDTO]
+    detected_dish: List[DetectedDish]
 
-class ProductDTOandMenuDTO(ProductDTO, MenuDTO):
-    pass
+class NewCheckDTO(pydantic.BaseModel):
+    id: int
+    dish_name: str
+    amount: float
+    price: int

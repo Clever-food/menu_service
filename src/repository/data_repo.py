@@ -1,14 +1,14 @@
-from dto import ProductDTOandMenuDTO
+from dto import NewCheckDTO
 
 
 class DataRepo:
     def __init__(self):
         self._data = None
 
-    def save(self, data: ProductDTOandMenuDTO) -> None:
+    def save(self, data: NewCheckDTO) -> None:
         self._data = data
 
-    def get(self) -> ProductDTOandMenuDTO:
+    def get(self) -> NewCheckDTO:
         return self._data
     
     def clear(self):

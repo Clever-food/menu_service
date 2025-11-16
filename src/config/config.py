@@ -18,7 +18,7 @@ class Settings(BaseSettings):
 
     CORE_URL: str
     
-    reload: bool = True
+    reload: bool = False
 
 
 settings = Settings()

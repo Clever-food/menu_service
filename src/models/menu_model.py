@@ -3,22 +3,32 @@ import peewee
 from src.models.db_connection import db
 
 class MenuModel(peewee.Model):
-    menu_id = peewee.PrimaryKeyField(
-        db_column="menu_id",
-    )
-    name = peewee.CharField(
-        max_length=1000,
+    id = peewee.AutoField()
+
+    dish_class = peewee.IntegerField(
         null=False,
     )
+
+    dish_name = peewee.CharField(
+        unique=True,
+        null=False,
+        max_length=50,
+    )
+
+    is_portionable = peewee.BooleanField(
+        null=True
+    )
+
+    weight_volume = peewee.IntegerField(
+        null=True,
+    )
+
     price = peewee.IntegerField(
-        null=False,
+        null=True,
     )
-    volume = peewee.IntegerField(
-        null=False,
-    )
+
     class Meta:
         database = db
-        db_table = "menu"
-
+        db_table = "dish"
 
 MenuModel.create_table()
