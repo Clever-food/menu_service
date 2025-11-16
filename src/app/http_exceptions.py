@@ -139,3 +139,19 @@ class EntityNoMinimumLength(BaseHTTPException):
         ):
                 super().__init__()
                 self._message = f"Minimum length must be 3 characters"
+
+
+class ExternalServiceError(BaseHTTPException):
+    _service_name = ""
+    _message = f""
+    _error_code = 10
+    _status_code = 500
+
+    def __init__(
+            self,
+            exc_message: dict
+    ):
+        super().__init__()
+        self._service_name = exc_message.get("service_name")
+        self._message = exc_message.get("message")
+        self._error_code = exc_message.get("error_code")

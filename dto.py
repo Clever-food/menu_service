@@ -1,16 +1,5 @@
 from typing import List
 import pydantic
-from pydantic_settings import BaseSettings, SettingsConfigDict
-
-class AdminSettings(BaseSettings):
-    ADMIN_CODE: int
-    ADMIN_TOKEN: str
-    
-    model_config = SettingsConfigDict(
-        env_file=".env",
-        env_file_encoding="utf-8",
-        extra="ignore"
-    )
     
 class MenuDTO(pydantic.BaseModel):
     name: str

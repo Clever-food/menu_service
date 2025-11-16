@@ -1,8 +1,8 @@
-import os
 from fastapi.middleware.cors import CORSMiddleware
 from src.app.custom_app import CustomApp
 from src.routers.menu_router import menu_router
-
+from src.config.config import settings
+from src.routers.payment_router import payment_router
 
 app = CustomApp(
     title="MenuService"
@@ -10,7 +10,7 @@ app = CustomApp(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[os.getenv('FRONTEND_URL')],
+    allow_origins=[settings.FRONTEND_URL],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -19,3 +19,8 @@ app.add_middleware(
 app.include_router(
     menu_router
 )
+
+app.include_router(
+    payment_router
+)
+

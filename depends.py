@@ -1,4 +1,5 @@
-from dto import AdminSettings, MenuDTO
+from src.client.payment_client import PaymentClient
+from dto import MenuDTO
 from src.repository.admin_repo import AdminRepo
 from src.service.admin_service import AdminService
 from src.service.data_service import DataService
@@ -18,9 +19,10 @@ data_service = DataService(data_repo)
 connection_repo = ConnectionRepo()
 connection_service = ConnectionService(connection_repo)
 
-admin_settings = AdminSettings()
-admin_repo = AdminRepo(admin_settings)
+admin_repo = AdminRepo()
 admin_service = AdminService(admin_repo)
+
+payment_client = PaymentClient()
 
 def get_menu_service():
     return menu_service
@@ -33,3 +35,6 @@ def get_websocket_manager():
 
 def get_code():
     return admin_service
+
+def get_payment_client():
+    return payment_client
