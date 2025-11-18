@@ -15,7 +15,7 @@ menu_router = APIRouter(
     tags=["menu"]
 )
 
-@menu_router.get("/get_menu_item")
+@menu_router.get("/get-menu-item")
 def get_menu_item(
     menu_id: int,
     menu_processing_service: MenuProcessingService = Depends(get_menu_service)
@@ -26,7 +26,7 @@ def get_menu_item(
         raise EntityDoesNotExistError(e.model)
 
 
-@menu_router.post("/add_menu_item")
+@menu_router.post("/add-menu-item")
 def add_menu_item(
     dish_class: int,
     dish_name: str,
@@ -47,7 +47,7 @@ def add_menu_item(
         raise EntityNoMinimumLength(e.model)
 
 
-@menu_router.delete("/delete_menu_item")
+@menu_router.delete("/delete-menu-item")
 def delete_menu_item(
     menu_id: int,
     menu_processing_service: MenuProcessingService = Depends(get_menu_service)
@@ -58,7 +58,7 @@ def delete_menu_item(
         raise EntityDoesNotExistError(e.model)
 
 
-@menu_router.get("/get_all_menu")
+@menu_router.get("/get-all-menu")
 def get_all_menu(
     menu_processing_service: MenuProcessingService = Depends(get_menu_service)
 ):
@@ -74,7 +74,7 @@ def get_all_menu(
         raise HTTPException(status_code=500, detail=f"Возникла ошибка: {e}")
 
 
-@menu_router.post("/get_cheque_item")
+@menu_router.post("/get-cheque-item")
 def get_cheque_item(
     cheque: ChequeDTO,
     menu_processing_service: MenuProcessingService = Depends(get_menu_service),
@@ -90,7 +90,7 @@ def get_cheque_item(
         raise EntityDoesNotExistError(e.model)
 
 
-@menu_router.get("/get_saved_data")
+@menu_router.get("/get-saved-data")
 def get_saved_data(data_storage: DataService = Depends(get_data_storage)):
     saved_data = data_storage.get_data()
     if saved_data is None:
@@ -98,7 +98,7 @@ def get_saved_data(data_storage: DataService = Depends(get_data_storage)):
     return {"saved_data": saved_data}
 
 
-@menu_router.websocket("/get_saved_data_ws")
+@menu_router.websocket("/get-saved-data-ws")
 async def get_saved_data_websocket(
     websocket: WebSocket,
     connection_service: ConnectionService = Depends(get_websocket_manager),
@@ -121,14 +121,14 @@ async def get_saved_data_websocket(
 
 
 
-@menu_router.get("/check_code")
+@menu_router.get("/check-code")
 def check_code(
     code: int,
     admin_service: AdminService = Depends(get_code)
 ):
     return admin_service.check_code(code)
 
-@menu_router.delete("/clear_saved_data")
+@menu_router.delete("/clear-saved-data")
 async def clear_saved_data(
     data_storage: DataService = Depends(get_data_storage),
     connection_service: ConnectionService = Depends(get_websocket_manager)

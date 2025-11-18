@@ -6,6 +6,7 @@ class MenuModel(peewee.Model):
     id = peewee.AutoField()
 
     dish_class = peewee.IntegerField(
+        unique=True,
         null=False,
     )
 
