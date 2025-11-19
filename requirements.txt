@@ -5,3 +5,4 @@ fastapi
 peewee
 psycopg2-binary==2.9.10
 requests
+uvicorn[standard]
